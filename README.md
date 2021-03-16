@@ -270,3 +270,85 @@ SELECT DISTINCT COUNTRY FROM Customers WHERE Region IS NOT NULL
 ```
 SELECT UnitPrice, Quantity, Discount, UnitPrice * Quantity AS "Gross Total" FROM [Order Details] 
 ```
+- Let's see how can we sort the data
+- WE CAN SORT THE DATA IN ASCENDING ORDER AND DESCENDING 
+- BY DEFAULT THE DATA IS SORTED BY ASC ORDER 
+
+```
+SELECT UnitPrice, Quantity, Discount, UnitPrice*Quantity AS 'Gross Total' FROM [Order Details] ORDER BY 'GROSS TOTAL' DESC    
+SELECT TOP 5 UnitPrice, Quantity, Discount, UnitPrice * Quantity AS 'Gross Total'
+FROM [Order Details]
+ORDER BY 'Gross Total' ASC
+```
+```
+SELECT PostalCode 'Post Code', LEFT(PostalCode, CHARINDEX(' ',PostalCode)-1) AS 'Post Code Region' CHARINDEX(' ',PostalCode) AS 'space found',
+Country
+FROM Customers WHERE Country = 'UK'
+```
+```
+SELECT PostalCode “Post Code”,
+LEFT(PostalCode, CHARINDEX(‘ ‘,PostalCode)-1) AS “Post Code Region”,
+CHARINDEX(‘ ‘,PostalCode) AS ”Space Found”, Country
+FROM Customers
+WHERE Country = ‘UK’
+
+SELECT * FROM Customers
+```
+```
+SELECT PostalCode 'Post Code',
+LEFT(PostalCode, CHARINDEX(' ',PostalCode)) AS 'Post Code Region',
+CHARINDEX(' ',PostalCode) AS 'Space Found at Character', Country
+FROM Customers
+WHERE Country = 'UK'
+```
+
+- What is an apostroh
+```
+SELECT ProductName, CHARINDEX('''', Products.ProductName) AS "Apostrophe Found" FROM Products WHERE
+```
+- Date functions
+```
+SELECT DATEADD(d,5,OrderDate) AS "Due Date", DATEDIFF(d,OrderDate,ShippedDate) AS "Ship days" From Orders
+```
+- DATEADD has 3 arguments 
+- d or dd means day, m or mm month, yy or yyyy year
+- The Date to be added to
+- How many units to add
+
+- DATEDIFF uses the same datepart argument abbreviations followed by the two dates for the calculation.
+```
+SELECT FORMAT(Orders.OrderDate,5) FROM Orders
+```
+
+- Output a list of Employees from the Employees table including their Name (concatenated) and their Age (calculated from BirthDate)
+```
+SELECT e.FirstName +' '+e.LastName AS "Employee Name",
+DATEDIFF(YY, BirthDate, GETDATE()) AS "AGE"
+FROM Employees e
+```
+- CASE statements can be useful when you need varying results output based on differing data.
+
+- Pay close attention to WHEN THEN ELSE and END
+
+- Use single quotes for data and double quotes for column aliases.
+
+```
+SELECT CASE
+WHEN DATEDIFF(d,OrderDate,ShippedDate) < 10 THEN 'On Time'
+ELSE 'Overdue' -- single quotes for data
+END AS "Status" -- using double quotes for column
+FROM Orders
+```
+- Use CASE to add a column to the previous activity solution called Retirement Status as follows:
+
+- Age greater than 65 = ”Retired”
+- Age greater than 60 = “Retirement due”
+- Age less than 60 = “More than 5 years to go”
+```
+SELECT CASE 
+WHEN DATEDIFF(YY, e.BirthDate, GETDATE()) > 65 THEN 'Retired'
+WHEN DATEDIFF(YY, e.BirthDate, GETDATE()) > 60 THEN 'Retired Due'
+ELSE 'MORE THAN 5 YEARS LEFT'
+END AS "EMPLOYEMENT STATUS"
+FROM Employees e
+```
