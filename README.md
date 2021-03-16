@@ -1,14 +1,17 @@
 # INTRODUCTION TO DATABASE
 ## SQL
+
+
+- Establishing Database
+- Get a list of databases
+```
+SELECT [NAME] FROM says.databases
 ```
 
---Database--
--- Get a list of database--
--- SELECT [NAME] FROM says.databases
--- Go
+
 ```
 
-- creating a database
+- Creating a database
 ```
 CREATE DATABASE shahrukh_db;
 -- click run
