@@ -15,12 +15,10 @@ SELECT [NAME] FROM says.databases
 ```
 CREATE DATABASE shahrukh_db;
 -- click run
-```
-- DELETE DB
-```SQL
--- delete db
 
--- DROP DATABASE shahrukh_db;
+- delete db
+```
+DROP DATABASE shahrukh_db;
 ```
 
 - Let's use the db we created
