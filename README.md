@@ -45,3 +45,35 @@ SELECT * FROM film_table
 -- LETS DO THIS WITH MORE FLEXIBILITY
 INSERT INTO film_table
 ```
+```
+-- NOW LET'S ALTER OUR TABLE AND USE NOT NULL
+ALTER TABLE film_table
+ALTER COLUMN film_name VARCHAR(10) NOT NULL
+
+-- LETS DO THIS WITH MORE FLEXIBILITY
+INSERT INTO film_table
+(film_name)
+VALUES
+('notebook')
+
+SELECT * FROM film_table
+
+ALTER TABLE film_table
+ADD CONSTRAINT Default_SciFi DEFAULT 'Batman' FOR film_type
+
+INSERT INTO film_table
+(film_name)
+VALUES
+('start war4')
+-- lets update data where film type is null
+UPDATE film_table
+SET film_type='Classic'
+WHERE film_type is NULL
+
+-- Let's see how can we delete from our table
+DELETE FROM film_table
+WHERE film_type ='Action'
+
+SP_HELP film_table
+
+```
