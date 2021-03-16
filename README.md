@@ -100,39 +100,46 @@ SP_HELP film_table
 ```
 ## QUERING NORTHWIND DB
 
-```
+
 ### USING Northwind
 - WE WILL CONNECT TO NORTHWIND as we already have data available to query 
 
 - select from customers table using WHERE
+
 ```
 SELECT * FROM Customers
 WHERE Customers.City = 'Paris'
 ```
+
 - LETS CREATE ALAISIS as we have nick name
 - select from customers table using WHERE
+
 ```
 SELECT * FROM Customers c
 WHERE c.City = 'Paris'
 ```
 - Let's solve the problems
 - How many Employees have a home City of London?
+
 ```
 SELECT COUNT(*) AS "HOW MANY EMPLOYEES LIVE IN LONDON" FROM Employees e
 WHERE e.City = 'London'
 ```
 - CONTCATEMATION AND COLUM ALIASING 
+
 ```
 SELECT e.FirstName + ' ' + LastName AS "NAME OF EMPLOYEES FROM LONDON AREA" FROM Employees e
 WHERE e.City = 'London'
 ```
 
 - LETS USE AGGREGATE How many Employees have a home City of London?
+
 ```
 SELECT * FROM Employees e
 WHERE e.City = 'London'
 ```
 - Which Employee is a Doctor?
+
 ```
 SELECT * FROM Employees e
 WHERE e.TitleOfCourtesy = 'Dr.'
@@ -144,6 +151,7 @@ WHERE p.Discontinued = 1
 ```
 - LETS SEE HOW CAN WE COUNT
 - How many Products are discontinued?
+
 ```
 SELECT COUNT(*) AS "NUMBER OF PRODUCTS" FROM Products p
 WHERE p.Discontinued = 1
@@ -151,6 +159,7 @@ WHERE p.Discontinued = 1
 - Lets see how should we structure our queries
 
 - TOP 10, company names form customers TABLE
+
 ```
 SELECT TOP 10 CompanyName, City FROM Customers
 WHERE Country = 'France'
