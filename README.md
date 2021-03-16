@@ -77,3 +77,99 @@ WHERE film_type ='Action'
 SP_HELP film_table
 
 ```
+## QUERING NORTHWIND DB
+
+```
+USE Northwind
+-- WE WILL CONNECT TO NORTHWIND as we already have data available to query 
+
+-- select from customers table using WHERE
+SELECT * FROM Customers
+WHERE Customers.City = 'Paris'
+
+-- LETS CREATE ALAISIS as we have nick name
+-- select from customers table using WHERE
+SELECT * FROM Customers c
+WHERE c.City = 'Paris'
+
+-- Let's solve the problems
+-- How many Employees have a home City of London?
+SELECT COUNT(*) AS "HOW MANY EMPLOYEES LIVE IN LONDON" FROM Employees e
+WHERE e.City = 'London'
+
+-- CONTCATEMATION AND COLUM ALIASING 
+SELECT e.FirstName + ' ' + LastName AS "NAME OF EMPLOYEES FROM LONDON AREA" FROM Employees e
+WHERE e.City = 'London'
+
+
+-- LETS USE AGGREGATE How many Employees have a home City of London?
+SELECT * FROM Employees e
+WHERE e.City = 'London'
+
+-- Which Employee is a Doctor?
+SELECT * FROM Employees e
+WHERE e.TitleOfCourtesy = 'Dr.'
+
+-- How many Products are discontinued?
+SELECT * FROM Products p
+WHERE p.Discontinued = 1
+
+-- LETS SEE HOW CAN WE COUNT
+-- How many Products are discontinued?
+SELECT COUNT(*) AS "NUMBER OF PRODUCTS" FROM Products p
+WHERE p.Discontinued = 1
+
+-- Lets see how should we structure our queries
+
+-- TOP 10, company names form customers TABLE
+SELECT TOP 10 CompanyName, City FROM Customers
+WHERE Country = 'France'
+
+-- Let's use AND key word to select 
+SELECT ProductName, UnitPrice FROM Products
+WHERE CategoryID = 1 AND Discontinued = 0
+
+-- Let's investigate data type
+SP_HELP Products 
+
+-- Let's check stock on hand more than 0 with price range over 29.99 using AND keyword
+SELECT ProductName, UnitPrice FROM Products
+WHERE UnitsInStock > 0 AND UnitPrice > 29.99
+
+
+
+-- Let's check stock on hand more than 0 with price range over 29.99 using or keyword
+SELECT ProductName, UnitPrice FROM Products
+WHERE UnitsInStock > 0 OR UnitPrice > 29.99
+
+-- DISTINCT is used to remove duplicate values
+SELECT DISTINCT Country FROM Customers
+WHERE ContactTitle = 'Owner'
+
+-- What is a WILDCARDS in SQL
+-- use cases
+
+--SELECT * FROM Products p
+-- run it now and see products name
+-- now if we need to the names of products start from A
+SELECT p.ProductName FROM Products p WHERE p.ProductName Like 'A%'
+
+-- if we would like to exclude anything from the result
+SELECT P.ProductName FROM Products P WHERE p.ProductName LIKE '[^ACD]'
+-- THIS WILL REMOVE ANY PRODUCT NAME WHICH INCLUDE ACD
+
+SELECT ProductName FROM Products WHERE ProductName LIKE 'ch%'
+-- this will result in all products starting with ch
+
+SELECT * FROM Customers WHERE Region LIKE '_A'
+-- THIS HELP US FIND REGIONS ENDING WITH A - BEST EXAMPLE TO USE LIKE KEY WORD
+
+-- IF WE NEEDED TO FIND CUSTOMERS IN TWO SPECIFIC NAMED REGIONS USING IN KEYWROD
+SELECT * FROM Customers WHERE Region IN ('WA','SP')
+
+-- LET'S SEE HOW CAN WE FIND TERRITORIES WITH ID RANGES
+SELECT * FROM EmployeeTerritories WHERE TerritoryID BETWEEN 06800 AND 09999
+-- THIS WILL RESULT 3 ROWS AVAILABLE IN THE RANGE GIVEN
+
+
+```
