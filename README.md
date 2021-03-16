@@ -9,10 +9,8 @@ SELECT [NAME] FROM says.databases
 ```
 
 
-```
-
 - Creating a database
-```
+
 CREATE DATABASE shahrukh_db;
 -- click run
 
