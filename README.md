@@ -352,3 +352,179 @@ ELSE 'MORE THAN 5 YEARS LEFT'
 END AS "EMPLOYEMENT STATUS"
 FROM Employees e
 ```
+- link to the northwind Diagram
+- https://docs.yugabyte.com/latest/sample-data/northwind/
+```
+CREATE DATABASE shahrukh_db
+USE shahrukh_db
+
+DROP TABLE IF EXISTS course
+CREATE TABLE course  
+(
+    c_id INT IDENTITY(1,1) PRIMARY KEY,
+    course_name VARCHAR(30)
+)
+
+DROP TABLE IF EXISTS student
+CREATE TABLE student
+(
+    st_id INT IDENTITY(1,1),
+    student_name VARCHAR(30),
+    course_id INT,
+    FOREIGN KEY (course_id) REFERENCES course(c_id) ON DELETE CASCADE
+
+)
+```
+```
+INSERT INTO course
+(
+    course_name
+)
+VALUES
+(
+    'Business' 
+),
+(
+    'Test'
+),
+(
+    'Agile'
+),
+(
+    'Web'
+),
+(
+    'Dev'
+)
+```
+```
+INSERT INTO student
+(
+   student_name, course_id 
+)
+VALUES
+(
+    'Lee', 1
+),
+(
+    'Barry', 1
+),
+(
+    'David', 2
+),
+(
+    'Tim',5
+)
+
+
+INSERT INTO student
+(
+   student_name
+)
+VALUES
+(
+    'Nicole'   
+)
+
+SELECT * FROM student
+SELECT * FROM course
+```
+- /*INNER JOIN-matched rows*/
+- --DOD-->JOIN SYNTAX-->1. Applying the join keyword based on the question
+                -->2. Understanding which table to put in the left and which at the right
+                -->3. Applying the ON keyword to define the primary key and foreign key relationship
+
+```
+SELECT * FROM student s INNER JOIN course c
+ON s.course_id=c.c_id --ON defines primary key and foeign key relationship
+```
+- /*OUTER JOINS-LEFT JOIN, RIGHT JOIN, FULL JOIN*/
+- /*LEFT JOIN-All the rows from the left table and only the matching rows from the right table*/
+```
+SELECT * FROM student s LEFT JOIN course c   
+ON s.course_id=c.c_id
+
+SELECT * FROM student s RIGHT JOIN  course c
+ON s.course_id=c.c_id
+
+SELECT * FROM student s FULL JOIN course c   
+ON s.course_id=c.c_id
+
+
+SELECT * FROM Products
+```
+```
+USE Northwind 
+```
+- SELECT OrdersID, CONVERT(varchar(10,OrderDate,103))
+
+- SUB QUERY SYNTAX
+```
+SELECT CompanyName AS "Customer" FROM Customers
+WHERE CustomerID Not in (SELECT CustomerID FROM Orders)
+```
+- LETS USE JOINS TO GET THE SAME RESULTS
+```
+
+SELECT c.CompanyName AS 'Customer'
+FROM Customers c
+LEFT JOIN Orders o ON c.CustomerID = o.CustomerID
+WHERE OrderID IS NULL
+```
+- another example of sub query as nested query here SELECT CLAUSE acts as a column
+```
+SELECT OrderID, ProductID, UnitPrice, Quantity, Discount,
+(SELECT MAX(UnitPrice)From [Order Details] od) AS "Max Price"
+From [Order Details]
+```
+
+- sub query using a table
+```
+SELECT od.ProductID, sq1.totalamt AS "total sold for this product",
+UnitPrice, UnitPrice/totalamt*100 AS "% of Total"
+FROM [Order Details] od 
+INNER JOIN
+(SELECT ProductID, SUM(UnitPrice * Quantity) AS totalamt
+FROM [Order Details] GROUP BY ProductID) sq1 ON sq1.ProductID = od.ProductID 
+```
+- Using a Subquery in the WHERE clause, list all Orders
+- (Order ID, Product ID, Unit Price, Quantity and Discount)
+- from the [Order Details] table where the product has been discontinued
+
+- Now repeat the same exercise using a simple join
+```
+SELECT OrderID, UnitPrice, Quantity, Discount 
+FROM [Order Details]
+WHERE ProductID IN 
+(SELECT ProductID FROM Products WHERE Discontinued = 1);
+```
+- Lets try this with joins
+```
+SELECT od.OrderID, p.UnitPrice, od.Quantity, od.Discount FROM [Order Details] od
+
+INNER JOIN [Products] p ON od.ProductID = p.ProductID
+
+WHERE p.Discontinued = 1
+```
+
+- Keeping code clearn
+```
+SELECT od.OrderID, p.ProductID, od.UnitPrice, od.Quantity, od.Discount FROM [Order Details] od
+
+INNER JOIN [Products] p ON p.ProductID = od.ProductID 
+
+WHERE p.Discontinued = 1
+```
+
+- UNION ALL returns all 28 tows
+- UNION removes any duplicates
+```
+SELECT e.Employeeid AS "Employee/Supplier" From Employees e
+UNION ALL
+SELECT SupplierID FROM Suppliers 
+```
+- UNION removes any duplicates
+```
+SELECT e.Employeeid AS "Employee/Supplier" From Employees e UNION SELECT SupplierID FROM 
+Suppliers
+```
